@@ -1,25 +1,40 @@
 " Find the related spec for any file you open.
-function! FindSpec()
-  let s:fullpath = expand("%:p")
-  let s:filepath = expand("%:h")
-  let s:fname = expand("%:t")
+function! RelatedSpec()
+  let l:fullpath = expand("%:p")
+  let l:filepath = expand("%:h")
+  let l:fname = expand("%:t")
+  let l:filepath_without_app = substitute(l:filepath, "app/", "", "")
 
   " Possible names for the spec/test for the file we're looking at
-  let s:test_names = [substitute(s:fname, ".rb$", "_spec.rb", ""), substitute(s:fname, ".rb$", "_test.rb", "")]
+  let l:test_names = [substitute(l:fname, ".rb$", "_spec.rb", ""), substitute(l:fname, ".rb$", "_test.rb", "")]
 
   " Possible paths
-  let s:test_paths = ["spec", "fast_spec", "test"]
-  for test_name in s:test_names
-    for path in s:test_paths
-      let s:filepath_without_app = substitute(s:filepath, "app/", "", "")
-      let s:spec_path = path . "/" . s:filepath_without_app . "/" . test_name
-      let s:full_spec_path = substitute(s:fullpath, s:filepath . "/" . s:fname, s:spec_path, "")
-      if filereadable(s:full_spec_path)
-        execute ":botright vsp " . s:full_spec_path
-        return
-      endif
+  let l:test_paths = ["spec", "fast_spec", "test"]
+
+  for test_name in l:test_names
+    for path in l:test_paths
+      let l:spec_path = path . "/" . l:filepath_without_app . "/" . test_name
+      let l:full_spec_path = substitute(l:fullpath, l:filepath . "/" . l:fname, l:spec_path, "")
+      if filereadable(l:spec_path)
+        return l:full_spec_path
+      end
     endfor
   endfor
 endfunction
 
-nnoremap <C-s> :call FindSpec()<CR>
+function! RelatedSpecOpen()
+  let l:spec_path = RelatedSpec()
+  if filereadable(l:spec_path)
+    execute ":e " . l:spec_path
+  endif
+endfunction
+
+function! RelatedSpecVOpen()
+  let l:spec_path = RelatedSpec()
+  if filereadable(l:spec_path)
+    execute ":botright vsp " . l:spec_path
+  endif
+endfunction
+
+nnoremap <silent> <C-s> :call RelatedSpecVOpen()<CR>
+nnoremap <silent> ,<C-s> :call RelatedSpecOpen()<CR>

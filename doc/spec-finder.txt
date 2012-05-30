@@ -15,6 +15,13 @@ the corresponding spec will be open. The assumptions are:
 This method handles files in fast_spec unlike the :A and :AV functions
 that ship with rails.vim
 
+FUNCTIONS                                 *spec-finder-functions*
+
+RelatedSpec() - gives you the name of the related spec, can be integrated
+into other scripts, such as something that saves your file and runsj the
+related spec.
+RelatedSpecOpen() - Opens the related spec in current window
+RelatedSpecVOpen() - Opens the related spec in vertical split
 
 ABOUT                                     *spec-finder-author*
 
