@@ -10,17 +10,4 @@ For more information, please see doc/spec-finder.txt. There are included
 functions for opening the spec in the current window, and in a split, as
 well as just getting its full path.
 
-Mappings:
----
-
- * `Ctrl-s` Open spec in vertical split
- * ``Ctrl-s:` Open spec in current window
-
-Make your own mappings
----
-
-There are two main methods, one that opens in current window, and the other
-in a vertical split. Simply map them the usual way.
-
- * `map <silent> <whatever> :call RelatedSpecOpen<cr>`
- * `map <silent> <whatever> :call RelatedSpecVOpen<cr>`
+UPDATE: This plugin is now part of https://github.com/skwp/vim-ruby-conque
