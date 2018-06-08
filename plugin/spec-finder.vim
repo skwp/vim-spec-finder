@@ -47,7 +47,7 @@ endfunction
 
 " If looking at a regular file, find the related spec
 " If looking at a spec, find the related file
-function! s:RelatedSpecOrFile()
+function! g:RelatedSpecOrFile()
   let l:fname = expand("%:t")
   if match(l:fname, "_spec") != -1
     let l:result = s:FileRelatedToSpec()
@@ -59,14 +59,14 @@ function! s:RelatedSpecOrFile()
 endfunction
 
 function! s:RelatedSpecOpen()
-  let l:spec_path = s:RelatedSpecOrFile()
+  let l:spec_path = g:RelatedSpecOrFile()
   if filereadable(l:spec_path)
     execute ":e " . l:spec_path
   endif
 endfunction
 
 function! s:RelatedSpecVOpen()
-  let l:spec_path = s:RelatedSpecOrFile()
+  let l:spec_path = g:RelatedSpecOrFile()
   if filereadable(l:spec_path)
     execute ":botright vsp " . l:spec_path
   endif
